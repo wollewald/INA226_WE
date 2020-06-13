@@ -21,7 +21,7 @@ void setup() {
   Wire.begin();
   ina226.init();
 
-  // Conversion will ready after conversion time x number of averages x 2
+  // Conversion will be ready after conversion time x number of averages x 2
   ina226.setAverage(AVERAGE_512); 
   ina226.setConversionTime(CONV_TIME_8244); 
   ina226.setCorrectionFactor(0.899);
