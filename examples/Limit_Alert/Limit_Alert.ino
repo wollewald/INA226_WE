@@ -99,8 +99,8 @@ void loop() {
     ina226.readAndClearFlags(); // reads interrupt and overflow flags and deletes them 
     displayResults();
     attachInterrupt(digitalPinToInterrupt(interruptPin), alert, FALLING); 
-    ina226.readAndClearFlags(); 
     event = false;
+    ina226.readAndClearFlags();
   }  
   delay(1000);
 }
