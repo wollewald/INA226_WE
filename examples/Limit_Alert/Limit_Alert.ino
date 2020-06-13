@@ -62,7 +62,7 @@ void setup() {
      MA_400          400 mA
      MA_800          800 mA
     MA_1600         1600 mA
-    MA_3200         3200 mA
+    MA_3200         3200 mA  (default)
   */
   //ina226.setCurrentRange(MA_3200); // choose gain and uncomment for change of default
   
