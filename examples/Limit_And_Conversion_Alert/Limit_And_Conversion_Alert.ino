@@ -24,7 +24,7 @@ void setup() {
   // Conversion will be ready after conversion time x number of averages x 2
   ina226.setAverage(AVERAGE_512); 
   ina226.setConversionTime(CONV_TIME_8244); 
-  ina226.setCorrectionFactor(0.899);
+  // ina226.setCorrectionFactor(0.95);
   
   Serial.println("INA226 Current Sensor Example Sketch - Limit_And_Conversion_Alert");
   
