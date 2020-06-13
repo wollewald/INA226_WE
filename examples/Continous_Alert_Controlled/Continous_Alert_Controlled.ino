@@ -49,7 +49,7 @@ void setup() {
      CONV_TIME_4156       4.156 ms
      CONV_TIME_8244       8.244 ms  
   */
-  ina226.setConversionTime(CONV_TIME_8244); 
+  ina226.setConversionTime(CONV_TIME_8244); // Conversion ready after conversion time x number of averages x 2
   
   /* Set measure mode
   POWER_DOWN - INA219 switched off
@@ -71,7 +71,7 @@ void setup() {
      from values obtained with calibrated equipment you can define a correction factor.
      Correction factor = current delivered from calibrated equipment / current delivered by INA226
   */
-  ina226.setCorrectionFactor(0.899);
+  // ina226.setCorrectionFactor(0.95);
   
   Serial.println("INA226 Current Sensor Example Sketch - Continous_Alert_Controlled");
   
