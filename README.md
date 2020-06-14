@@ -1,5 +1,5 @@
 # INA226_WE
-An Arduino library for the INA226 current and power sensor module.
+An Arduino library for the INA226 current and power sensor module using a shunt of 0.1 Ohm.
 
 It allows to set current ranges, number of samples per measurement, conversion ranges. You can chose between continous, triggered and power down mode. Conversion ready and limit alert modes are also implemented. 
 
