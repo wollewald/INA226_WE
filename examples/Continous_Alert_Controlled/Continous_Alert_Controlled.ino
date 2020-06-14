@@ -61,11 +61,9 @@ void setup() {
   /* Set Current Range
     * Mode *   * Max Current *
      MA_400          400 mA
-     MA_800          800 mA
-    MA_1600         1600 mA
-    MA_3200         3200 mA  (default)
+     MA_800          800 mA (default)
   */
-  //ina226.setCurrentRange(MA_3200); // choose gain and uncomment for change of default
+  //ina226.setCurrentRange(MA_800); // choose gain and uncomment for change of default
   
   /* If the current values delivered by the INA226 differ by a constant factor
      from values obtained with calibrated equipment you can define a correction factor.
