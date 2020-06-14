@@ -90,9 +90,7 @@ typedef enum INA226_ALERT_TYPE{
 
 typedef enum INA226_CURRENT_RANGE{
 	MA_400,
-	MA_800,
-	MA_1600,
-	MA_3200
+	MA_800
 } currentRange;
 
 class INA226_WE
