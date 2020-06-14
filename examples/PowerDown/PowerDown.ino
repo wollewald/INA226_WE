@@ -1,10 +1,10 @@
 /***************************************************************************
-* Example sketch for the INA219_WE library
+* Example sketch for the INA226_WE library
 *
 * This sketch shows how to use the INA219 module in continous mode. 
 *  
 * Further information can be found on:
-* http://wolles-elektronikkiste.de/ina219
+* http://wolles-elektronikkiste.de/ina226
 * 
 ***************************************************************************/
 #include <Wire.h>
