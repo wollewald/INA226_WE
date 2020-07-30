@@ -1,7 +1,7 @@
 /***************************************************************************
 * Example sketch for the INA226_WE library
 *
-* This sketch shows how to use the INA219 module in continous mode. 
+* This sketch shows how to use the INA219 module in power down mode. 
 *  
 * Further information can be found on:
 * http://wolles-elektronikkiste.de/ina226
@@ -20,13 +20,13 @@ void setup() {
   // default parameters are set - for change check the other examples
   ina226.init();
   Serial.println("INA226 Current Sensor Example Sketch - PowerDown");
-  Serial.println("Continous Sampling starts");
+  Serial.println("Continuous Sampling starts");
   Serial.println();
 }
 
 void loop() {
   for(int i=0; i<5; i++){
-    continousSampling();
+    continuousSampling();
     delay(3000);
   }
   
@@ -42,7 +42,7 @@ void loop() {
   ina226.powerUp();
 }
 
-void continousSampling(){
+void continuousSampling(){
   float shuntVoltage_mV = 0.0;
   float loadVoltage_V = 0.0;
   float busVoltage_V = 0.0;
