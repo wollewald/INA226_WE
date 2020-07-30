@@ -74,7 +74,7 @@ typedef enum INA226_CONV_TIME{ // Conversion time in microseconds
 typedef enum INA226_MEASURE_MODE{
 	POWER_DOWN 		= 0b00000000,
 	TRIGGERED		= 0b00000011,
-	CONTINOUS		= 0b00000111
+	CONTINUOUS		= 0b00000111
 } measureMode;
 
 typedef enum INA226_ALERT_TYPE{
@@ -85,7 +85,7 @@ typedef enum INA226_ALERT_TYPE{
 	POWER_OVER	  = 0x0800,
 	CURRENT_OVER  = 0xFFFE,
 	CURRENT_UNDER = 0xFFFF,
-	CONV_READY	  = 0x0400   // not implemented! Use enableConvReadyAlert() 
+	//CONV_READY	  = 0x0400   not implemented! Use enableConvReadyAlert() 
 } alertType;
 
 typedef enum INA226_CURRENT_RANGE{
