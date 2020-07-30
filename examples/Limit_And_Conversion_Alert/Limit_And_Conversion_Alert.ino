@@ -1,7 +1,7 @@
 /***************************************************************************
 * Example sketch for the INA226_WE library
 *
-* This sketch shows how to use the INA226 module in continous mode. 
+* This sketch shows how to use the limit and conversion alert of the INA226 module in parallel. 
 *  
 * Further information can be found on:
 * http://wolles-elektronikkiste.de/ina226
