@@ -1,7 +1,7 @@
 /***************************************************************************
 * Example sketch for the INA226_WE library
 *
-* This sketch shows how to use the INA226 module in continous mode. 
+* This sketch shows how to use the INA226 module in triggered mode. 
 *  
 * Further information can be found on:
 * http://wolles-elektronikkiste.de/ina226
@@ -51,7 +51,7 @@ void setup() {
   /* Set measure mode
   POWER_DOWN - INA219 switched off
   TRIGGERED  - measurement on demand
-  CONTINOUS  - Continous measurements (default)
+  CONTINUOUS  - continuous measurements (default)
   */
   ina226.setMeasureMode(TRIGGERED); // choose mode and uncomment for change of default
   
