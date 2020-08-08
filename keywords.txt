@@ -1,0 +1,80 @@
+#######################################
+# Syntax Coloring Map For INA226_WE
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+INA226_WE	KEYWORD1
+
+# ENUM TYPES
+INA226_AVERAGES	KEYWORD1
+INA226_CONV_TIME	KEYWORD1
+INA226_MEASURE_MODE	KEYWORD1
+INA226_ALERT_TYPE	KEYWORD1
+INA226_CURRENT_RANGE	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+reset_INA226	KEYWORD2
+init	KEYWORD2
+setCorrectionFactor	KEYWORD2
+setAverage	KEYWORD2
+setConversionTime	KEYWORD2
+setMeasureMode	KEYWORD2
+setCurrentRange	KEYWORD2
+getShuntVoltage_mV	KEYWORD2
+getBusVoltage_V	KEYWORD2
+getCurrent_mA	KEYWORD2
+getBusPower	KEYWORD2
+startSingleMeasurement	KEYWORD2
+powerDown	KEYWORD2
+powerUp	KEYWORD2
+waitUntilConversionCompleted	KEYWORD2
+setAlertPinActiveHigh	KEYWORD2
+enableAlertLatch	KEYWORD2
+enableConvReadyAlert	KEYWORD2
+setAlertType	KEYWORD2
+readAndClearFlags	KEYWORD2
+overflow	KEYWORD2
+convAlert	KEYWORD2
+limitAlert	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+# ENUM VALUES
+AVERAGE_1	LITERAL1
+AVERAGE_4	LITERAL1
+AVERAGE_16	LITERAL1
+AVERAGE_64	LITERAL1
+AVERAGE_128	LITERAL1
+AVERAGE_256	LITERAL1
+AVERAGE_512	LITERAL1
+AVERAGE_1024	LITERAL1
+CONV_TIME_140	LITERAL1
+CONV_TIME_204	LITERAL1
+CONV_TIME_332	LITERAL1
+CONV_TIME_588	LITERAL1
+CONV_TIME_1100	LITERAL1
+CONV_TIME_2116	LITERAL1
+CONV_TIME_4156	LITERAL1
+CONV_TIME_8244	LITERAL1
+POWER_DOWN	LITERAL1
+TRIGGERED	LITERAL1
+CONTINUOUS	LITERAL1
+SHUNT_OVER	LITERAL1
+SHUNT_UNDER	LITERAL1
+BUS_OVER	LITERAL1
+BUS_UNDER	LITERAL1
+POWER_OVER	LITERAL1
+CURRENT_OVER	LITERAL1
+CURRENT_UNDER	LITERAL1
+CONV_READY	LITERAL1
+MA_400	LITERAL1
+MA_800	LITERAL1
