@@ -1,7 +1,7 @@
 /***************************************************************************
 * Example sketch for the INA226_WE library
 *
-* This sketch shows how to use the INA219 module in power down mode. 
+* This sketch shows how to use the INA219 power down mode. 
 *  
 * Further information can be found on:
 * http://wolles-elektronikkiste.de/ina226
