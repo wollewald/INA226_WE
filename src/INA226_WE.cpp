@@ -89,6 +89,17 @@ void INA226_WE::setCurrentRange(INA226_CURRENT_RANGE range){
 	writeRegister(INA226_CAL_REG, calVal);			
 }
 
+//set resistor and current range independant. resistor value in ohm, current range in A
+void INA226_WE::setResistorRange(float resistor, float current_range){
+	float current_LSB=current_range/32768.0;
+
+	calVal = 0.00512/(current_LSB*resistor);
+	currentDivider_mA = 0.001/current_LSB;
+	pwrMultiplier_mW = 1000.0*25.0*current_LSB;
+
+	writeRegister(INA226_CAL_REG, calVal);			
+}
+
 
 float INA226_WE::getShuntVoltage_mV(){
 	int16_t val;

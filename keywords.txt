@@ -27,6 +27,7 @@ setAverage	KEYWORD2
 setConversionTime	KEYWORD2
 setMeasureMode	KEYWORD2
 setCurrentRange	KEYWORD2
+setResistorRange	KEYWORD2
 getShuntVoltage_mV	KEYWORD2
 getBusVoltage_V	KEYWORD2
 getCurrent_mA	KEYWORD2

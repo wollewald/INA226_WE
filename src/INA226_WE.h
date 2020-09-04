@@ -106,6 +106,7 @@ public:
 	void setConversionTime(INA226_CONV_TIME convTime);
 	void setMeasureMode(INA226_MEASURE_MODE mode);
 	void setCurrentRange(INA226_CURRENT_RANGE range);
+	void setResistorRange(float resistor, float range);
 	float getShuntVoltage_mV();
 	float getBusVoltage_V();
 	float getCurrent_mA();
