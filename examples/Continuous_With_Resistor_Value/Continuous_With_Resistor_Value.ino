@@ -5,6 +5,10 @@
 *  
 * This setup uses a stromsensor6mm board with a 5 mOhm shunt resistor
 * More information on this board can be found here: https://github.com/generationmake/stromsensor6mm
+*
+* More information on the INA226_WE library:
+* https://wolles-elektronikkiste.de/en/ina226-current-and-power-sensor (English)
+* https://wolles-elektronikkiste.de/ina226 (German)
 * 
 ***************************************************************************/
 #include <Wire.h>
