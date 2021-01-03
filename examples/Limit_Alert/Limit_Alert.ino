@@ -4,7 +4,8 @@
 * This sketch shows how to use the limit alert of the INA226 module.
 *  
 * Further information can be found on:
-* http://wolles-elektronikkiste.de/ina226
+* https://wolles-elektronikkiste.de/en/ina226-current-and-power-sensor (English)
+* https://wolles-elektronikkiste.de/ina226 (German)
 * 
 ***************************************************************************/
 #include <Wire.h>
@@ -51,7 +52,7 @@ void setup() {
   // ina226.setConversionTime(CONV_TIME_8244); 
   
   /* Set measure mode
-  POWER_DOWN - INA219 switched off
+  POWER_DOWN - INA226 switched off
   TRIGGERED  - measurement on demand
   CONTINUOUS  - continuous measurements (default)
   */
