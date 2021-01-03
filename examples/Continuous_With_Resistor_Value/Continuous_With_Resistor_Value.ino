@@ -54,7 +54,7 @@ void setup() {
   //ina226.setConversionTime(CONV_TIME_1100); //choose conversion time and uncomment for change of default
   
   /* Set measure mode
-  POWER_DOWN - INA219 switched off
+  POWER_DOWN - INA226 switched off
   TRIGGERED  - measurement on demand
   CONTINUOUS  - continuous measurements (default)
   */
