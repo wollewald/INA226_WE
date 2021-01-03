@@ -4,7 +4,8 @@
 * This sketch shows how to use the limit and conversion alert of the INA226 module in parallel. 
 *  
 * Further information can be found on:
-* http://wolles-elektronikkiste.de/ina226
+* https://wolles-elektronikkiste.de/ina226 (German)
+* https://wolles-elektronikkiste.de/en/ina226-current-and-power-sensor (English)
 * 
 ***************************************************************************/
 #include <Wire.h>
