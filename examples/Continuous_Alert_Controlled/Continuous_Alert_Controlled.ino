@@ -4,7 +4,8 @@
 * This sketch shows how to use the INA226 module in continuous mode, alert controlled. 
 *  
 * Further information can be found on:
-* http://wolles-elektronikkiste.de/ina226
+* https://wolles-elektronikkiste.de/ina226 (German)
+* https://wolles-elektronikkiste.de/en/ina226-current-and-power-sensor (English)
 * 
 ***************************************************************************/
 #include <Wire.h>
@@ -52,7 +53,7 @@ void setup() {
   ina226.setConversionTime(CONV_TIME_8244); // Conversion ready after conversion time x number of averages x 2
   
   /* Set measure mode
-  POWER_DOWN - INA219 switched off
+  POWER_DOWN - INA226 switched off
   TRIGGERED  - measurement on demand
   CONTINUOUS  - continuous measurements (default)
   */
