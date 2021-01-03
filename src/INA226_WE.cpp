@@ -1,4 +1,4 @@
-/*****************************************
+/*****************************************************************
 * This is a library for the INA226 Current and Power Sensor Module
 *
 * You'll find an example which should enable you to use the library. 
@@ -9,9 +9,10 @@
 * If you find bugs, please inform me!
 * 
 * Written by Wolfgang (Wolle) Ewald
-* https://wolles-elektronikkiste.de
+* https://wolles-elektronikkiste.de/en/ina226-current-and-power-sensor (English)
+* https://wolles-elektronikkiste.de/ina226 (German)
 *
-*******************************************/
+******************************************************************/
 
 #include "INA226_WE.h"
 
