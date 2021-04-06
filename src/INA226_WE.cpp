@@ -172,6 +172,7 @@ void INA226_WE::powerUp(){
 // Returns 1 if conversion is still ongoing
 bool INA226_WE::isBusy(){
     return (!(readRegister(INA226_MASK_EN_REG) &0x0008));
+}
     
 void INA226_WE::waitUntilConversionCompleted(){
 	readRegister(INA226_MASK_EN_REG); // clears CNVR (Conversion Ready) Flag
