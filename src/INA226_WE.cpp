@@ -24,7 +24,11 @@ INA226_WE::INA226_WE(){
 	i2cAddress = 0x40;
 }
 	
-void INA226_WE::init(){	
+bool INA226_WE::init(){
+	Wire.beginTransmission(i2cAddress);
+  if(Wire.endTransmission()){
+    return 0;
+  }
 	reset_INA226();
 	setAverage(AVERAGE_1);
 	setConversionTime(CONV_TIME_1100);
@@ -32,6 +36,7 @@ void INA226_WE::init(){
 	setCurrentRange(MA_800);
 	convAlert = false;
 	limitAlert = false;
+	return 1;
 }
 
 void INA226_WE::reset_INA226(){
@@ -51,16 +56,19 @@ void INA226_WE::setAverage(INA226_AVERAGES averages){
 	writeRegister(INA226_CONF_REG, currentConfReg);
 }
 
-void INA226_WE::setConversionTime(INA226_CONV_TIME convTime){
-	deviceConvTime = convTime;
+void INA226_WE::setConversionTime(INA226_CONV_TIME shuntConvTime, INA226_CONV_TIME busConvTime){
 	uint16_t currentConfReg = readRegister(INA226_CONF_REG);
 	currentConfReg &= ~(0x01C0);  
 	currentConfReg &= ~(0x0038);
-	uint16_t convMask = ((uint16_t)deviceConvTime)<<3;
+	uint16_t convMask = ((uint16_t)shuntConvTime)<<3;
 	currentConfReg |= convMask;
-	convMask = deviceConvTime<<6;
+	convMask = busConvTime<<6;
 	currentConfReg |= convMask;
 	writeRegister(INA226_CONF_REG, currentConfReg);
+}
+
+void INA226_WE::setConversionTime(INA226_CONV_TIME convTime){
+	setConversionTime(convTime, convTime);
 }
 
 void INA226_WE::setMeasureMode(INA226_MEASURE_MODE mode){
@@ -85,8 +93,7 @@ void INA226_WE::setCurrentRange(INA226_CURRENT_RANGE range){
 			currentDivider_mA = 25.0;
 			pwrMultiplier_mW = 1.0;
 			break;
-	}
-	
+	}	
 	writeRegister(INA226_CAL_REG, calVal);			
 }
 
@@ -101,6 +108,11 @@ void INA226_WE::setResistorRange(float resistor, float current_range){
 	writeRegister(INA226_CAL_REG, calVal);			
 }
 
+float INA226_WE::getShuntVoltage_V(){
+	int16_t val;
+	val = (int16_t) readRegister(INA226_SHUNT_REG);
+	return (val * 0.0000025);	
+}
 
 float INA226_WE::getShuntVoltage_mV(){
 	int16_t val;
@@ -120,6 +132,10 @@ float INA226_WE::getCurrent_mA(){
 	return (val / currentDivider_mA);
 }
 
+float INA226_WE::getCurrent_A() {
+	return (getCurrent_mA()/1000);
+}
+
 float INA226_WE::getBusPower(){
 	uint16_t val;
 	val = readRegister(INA226_PWR_REG);
@@ -129,11 +145,18 @@ float INA226_WE::getBusPower(){
 void INA226_WE::startSingleMeasurement(){
 	uint16_t val = readRegister(INA226_MASK_EN_REG); // clears CNVR (Conversion Ready) Flag
 	val = readRegister(INA226_CONF_REG);
-	writeRegister(INA226_CONF_REG, val);
+	writeRegister(INA226_CONF_REG, val);		// Starts conversion
 	uint16_t convReady = 0x0000;
 	while(!convReady){
 		convReady = ((readRegister(INA226_MASK_EN_REG)) & 0x0008); // checks if sampling is completed
 	}
+}
+
+// Don't wait for conversion to complete
+void INA226_WE::startSingleMeasurementNoWait(){
+	uint16_t val = readRegister(INA226_MASK_EN_REG); // clears CNVR (Conversion Ready) Flag
+	val = readRegister(INA226_CONF_REG);
+	writeRegister(INA226_CONF_REG, val);		// Starts conversion
 }
 
 void INA226_WE::powerDown(){
@@ -146,6 +169,10 @@ void INA226_WE::powerUp(){
     delayMicroseconds(40);	
 }
 
+// Returns 1 if conversion is still ongoing
+bool INA226_WE::isBusy(){
+    return (!(readRegister(INA226_MASK_EN_REG) &0x0008));
+    
 void INA226_WE::waitUntilConversionCompleted(){
 	readRegister(INA226_MASK_EN_REG); // clears CNVR (Conversion Ready) Flag
 	uint16_t convReady = 0x0000;
