@@ -76,7 +76,7 @@ typedef enum INA226_MEASURE_MODE{
 	POWER_DOWN 		= 0b00000000,
 	TRIGGERED		= 0b00000011,
 	CONTINUOUS		= 0b00000111
-} measureMode;
+} INA226_measureMode;
 
 typedef enum INA226_ALERT_TYPE{
 	SHUNT_OVER 	  = 0x8000,
@@ -100,19 +100,24 @@ public:
 	INA226_WE(int addr);
 	INA226_WE();			//sets default I2C Address 0x40
   
-	void init();
+	bool init();
 	void reset_INA226();
 	void setCorrectionFactor(float corr);
 	void setAverage(INA226_AVERAGES averages);
 	void setConversionTime(INA226_CONV_TIME convTime);
+	void setConversionTime(INA226_CONV_TIME shuntConvTime, INA226_CONV_TIME busConvTime);
 	void setMeasureMode(INA226_MEASURE_MODE mode);
 	void setCurrentRange(INA226_CURRENT_RANGE range);
 	void setResistorRange(float resistor, float range);
 	float getShuntVoltage_mV();
+	float getShuntVoltage_V();
 	float getBusVoltage_V();
 	float getCurrent_mA();
+	float getCurrent_A();
 	float getBusPower();
 	void startSingleMeasurement();
+	void startSingleMeasurementNoWait();
+	bool isBusy();
 	void powerDown();
 	void powerUp(); 
 	void waitUntilConversionCompleted();
