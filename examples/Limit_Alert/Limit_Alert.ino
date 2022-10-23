@@ -16,11 +16,10 @@ int interruptPin = 2;
 volatile bool event = false;
 
 /* There are several ways to create your INA226 object:
- * INA226_WE ina226 = INA226_WE()              -> uses Wire / I2C Address = 0x40
- * INA226_WE ina226 = INA226_WE(ICM20948_ADDR) -> uses Wire / I2C_ADDRESS
- * INA226_WE ina226 = INA226_WE(&wire2)        -> uses the TwoWire object wire2 / I2C_ADDRESS
- * INA226_WE ina226 = INA226_WE(&wire2, I2C_ADDRESS) -> all together
- * Successfully tested with two I2C busses on an ESP32
+ * INA226_WE ina226 = INA226_WE(); -> uses I2C Address = 0x40 / Wire
+ * INA226_WE ina226 = INA226_WE(I2C_ADDRESS);   
+ * INA226_WE ina226 = INA226_WE(&Wire); -> uses I2C_ADDRESS = 0x40, pass any Wire Object
+ * INA226_WE ina226 = INA226_WE(&Wire, I2C_ADDRESS); 
  */
 INA226_WE ina226 = INA226_WE(I2C_ADDRESS);
 
