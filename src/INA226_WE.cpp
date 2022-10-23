@@ -16,26 +16,6 @@
 
 #include "INA226_WE.h"
 
-INA226_WE::INA226_WE(int addr){
-    _wire = &Wire;
-    i2cAddress = addr;   
-}
-
-INA226_WE::INA226_WE(){
-    _wire = &Wire;
-    i2cAddress = 0x40;   
-}
-
-INA226_WE::INA226_WE(TwoWire *w, int addr){
-    _wire = w;
-    i2cAddress = addr; 
-}
-
-INA226_WE::INA226_WE(TwoWire *w){
-    _wire = w;
-    i2cAddress = 0x40;
-}
-
 bool INA226_WE::init(){
     _wire->beginTransmission(i2cAddress);
     if(_wire->endTransmission()){
@@ -74,7 +54,7 @@ void INA226_WE::setConversionTime(INA226_CONV_TIME shuntConvTime, INA226_CONV_TI
     uint16_t currentConfReg = readRegister(INA226_CONF_REG);
     currentConfReg &= ~(0x01C0);  
     currentConfReg &= ~(0x0038);
-    uint16_t convMask = ((uint16_t)shuntConvTime)<<3;
+    uint16_t convMask = (static_cast<uint16_t>(shuntConvTime))<<3;
     currentConfReg |= convMask;
     convMask = busConvTime<<6;
     currentConfReg |= convMask;
@@ -124,13 +104,13 @@ void INA226_WE::setResistorRange(float resistor, float current_range){
 
 float INA226_WE::getShuntVoltage_V(){
     int16_t val;
-    val = (int16_t) readRegister(INA226_SHUNT_REG);
+    val = static_cast<int16_t>(readRegister(INA226_SHUNT_REG));
     return (val * 0.0000025 * corrFactor);  
 }
 
 float INA226_WE::getShuntVoltage_mV(){
     int16_t val;
-    val = (int16_t) readRegister(INA226_SHUNT_REG);
+    val = static_cast<int16_t>(readRegister(INA226_SHUNT_REG));
     return (val * 0.0025 * corrFactor); 
 }
 
@@ -142,7 +122,7 @@ float INA226_WE::getBusVoltage_V(){
 
 float INA226_WE::getCurrent_mA(){
     int16_t val;
-    val = (int16_t)readRegister(INA226_CURRENT_REG);
+    val = static_cast<int16_t>(readRegister(INA226_CURRENT_REG));
     return (val / currentDivider_mA);
 }
 
@@ -281,7 +261,7 @@ uint16_t INA226_WE::readRegister(uint8_t reg){
   _wire->beginTransmission(i2cAddress);
   _wire->write(reg);
   _wire->endTransmission(false);
-  _wire->requestFrom(i2cAddress,2);
+  _wire->requestFrom(static_cast<uint8_t>(i2cAddress),static_cast<uint8_t>(2));
   if(_wire->available()){
     MSByte = _wire->read();
     LSByte = _wire->read();
