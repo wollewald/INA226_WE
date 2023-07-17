@@ -110,6 +110,8 @@ class INA226_WE
         void setMeasureMode(INA226_MEASURE_MODE mode);
         void setCurrentRange(INA226_CURRENT_RANGE range);
         void setResistorRange(float resistor, float range);
+        //calib = 0.00512/(range/32768*resistor)
+        void setCalVal(float calib, float current_range);
         float getShuntVoltage_mV();
         float getShuntVoltage_V();
         float getBusVoltage_V();
@@ -130,6 +132,13 @@ class INA226_WE
         bool overflow;
         bool convAlert;
         bool limitAlert;
+
+        uint16_t getRawCurrent_mA();
+        uint16_t getRawBusVoltage_V();
+
+        float convertBusVoltage_V(uint16_t value);
+        float convertCurrent_mA(uint16_t value);
+
     
     
     protected:
