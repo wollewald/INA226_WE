@@ -102,6 +102,17 @@ void INA226_WE::setResistorRange(float resistor, float current_range){
     writeRegister(INA226_CAL_REG, calVal);          
 }
 
+//calib = 0.00512/(range/32768*resistor)
+void INA226_WE::setCalVal(float calib, float current_range){
+    float current_LSB=current_range/32768.0;
+
+    calVal = calib;
+    currentDivider_mA = 0.001/current_LSB;
+    pwrMultiplier_mW = 1000.0*25.0*current_LSB;
+
+    writeRegister(INA226_CAL_REG, calVal);          
+}
+
 float INA226_WE::getShuntVoltage_V(){
     int16_t val;
     val = static_cast<int16_t>(readRegister(INA226_SHUNT_REG));
@@ -120,11 +131,32 @@ float INA226_WE::getBusVoltage_V(){
     return (val * 0.00125);
 }
 
+uint16_t INA226_WE::getRawBusVoltage_V(){
+    uint16_t val;
+    val = readRegister(INA226_BUS_REG);
+    return (val);
+}
+
 float INA226_WE::getCurrent_mA(){
     int16_t val;
     val = static_cast<int16_t>(readRegister(INA226_CURRENT_REG));
     return (val / currentDivider_mA);
 }
+
+uint16_t INA226_WE::getRawCurrent_mA(){
+    int16_t val;
+    val = static_cast<int16_t>(readRegister(INA226_CURRENT_REG));
+    return (val);
+}
+
+float INA226_WE::convertBusVoltage_V(uint16_t value){
+    return (value * 0.00125);
+}
+
+float INA226_WE::convertCurrent_mA(uint16_t value){
+    return (value / currentDivider_mA);
+}
+
 
 float INA226_WE::getCurrent_A() {
     return (getCurrent_mA()/1000);
