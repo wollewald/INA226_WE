@@ -29,6 +29,7 @@ bool INA226_WE::init(){
     convAlert = false;
     limitAlert = false;
     corrFactor = 1.0;
+    i2cErrorCode = 0;
     return 1;
 }
 
@@ -102,17 +103,6 @@ void INA226_WE::setResistorRange(float resistor, float current_range){
     writeRegister(INA226_CAL_REG, calVal);          
 }
 
-//calib = 0.00512/(range/32768*resistor)
-void INA226_WE::setCalVal(float calib, float current_range){
-    float current_LSB=current_range/32768.0;
-
-    calVal = calib;
-    currentDivider_mA = 0.001/current_LSB;
-    pwrMultiplier_mW = 1000.0*25.0*current_LSB;
-
-    writeRegister(INA226_CAL_REG, calVal);          
-}
-
 float INA226_WE::getShuntVoltage_V(){
     int16_t val;
     val = static_cast<int16_t>(readRegister(INA226_SHUNT_REG));
@@ -131,32 +121,11 @@ float INA226_WE::getBusVoltage_V(){
     return (val * 0.00125);
 }
 
-uint16_t INA226_WE::getRawBusVoltage_V(){
-    uint16_t val;
-    val = readRegister(INA226_BUS_REG);
-    return (val);
-}
-
 float INA226_WE::getCurrent_mA(){
     int16_t val;
     val = static_cast<int16_t>(readRegister(INA226_CURRENT_REG));
     return (val / currentDivider_mA);
 }
-
-uint16_t INA226_WE::getRawCurrent_mA(){
-    int16_t val;
-    val = static_cast<int16_t>(readRegister(INA226_CURRENT_REG));
-    return (val);
-}
-
-float INA226_WE::convertBusVoltage_V(uint16_t value){
-    return (value * 0.00125);
-}
-
-float INA226_WE::convertCurrent_mA(uint16_t value){
-    return (value / currentDivider_mA);
-}
-
 
 float INA226_WE::getCurrent_A() {
     return (getCurrent_mA()/1000);
@@ -173,7 +142,8 @@ void INA226_WE::startSingleMeasurement(){
     val = readRegister(INA226_CONF_REG);
     writeRegister(INA226_CONF_REG, val);        // Starts conversion
     uint16_t convReady = 0x0000;
-    while(!convReady){
+    unsigned long convStart = millis();
+	while(!convReady && ((millis()-convStart) < 2000)){
         convReady = ((readRegister(INA226_MASK_EN_REG)) & 0x0008); // checks if sampling is completed
     }
 }
@@ -271,6 +241,10 @@ void INA226_WE::readAndClearFlags(){
     convAlert = (value>>3) & 0x0001;
     limitAlert = (value>>4) & 0x0001;
 }
+
+uint8_t INA226_WE::getI2cErrorCode(){
+    return i2cErrorCode;
+}
     
 
 /************************************************ 
@@ -292,7 +266,7 @@ uint16_t INA226_WE::readRegister(uint8_t reg){
   uint16_t regValue = 0;
   _wire->beginTransmission(i2cAddress);
   _wire->write(reg);
-  _wire->endTransmission(false);
+  i2cErrorCode = _wire->endTransmission(false);
   _wire->requestFrom(static_cast<uint8_t>(i2cAddress),static_cast<uint8_t>(2));
   if(_wire->available()){
     MSByte = _wire->read();
