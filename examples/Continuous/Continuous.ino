@@ -23,7 +23,10 @@ INA226_WE ina226 = INA226_WE(I2C_ADDRESS);
 void setup() {
   Serial.begin(9600);
   Wire.begin();
-  ina226.init();
+  if(!ina226.init()){
+    Serial.println("Failed to init INA226. Check your wiring.");
+    while(1){}
+  }
 
   /* Set Number of measurements for shunt and bus voltage which shall be averaged
   * Mode *     * Number of samples *
