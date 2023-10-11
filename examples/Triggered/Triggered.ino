@@ -93,6 +93,7 @@ void loop() {
   current_mA = ina226.getCurrent_mA();
   power_mW = ina226.getBusPower();
   loadVoltage_V  = busVoltage_V + (shuntVoltage_mV/1000);
+  checkForI2cErrors();
     
   Serial.print("Shunt Voltage [mV]: "); Serial.println(shuntVoltage_mV);
   Serial.print("Bus Voltage [V]: "); Serial.println(busVoltage_V);
@@ -108,4 +109,34 @@ void loop() {
   Serial.println();
   
   delay(3000);
+}
+
+void checkForI2cErrors(){
+  byte errorCode = ina226.getI2cErrorCode();
+  if(errorCode){
+    Serial.print("I2C error: ");
+    Serial.println(errorCode);
+    switch(errorCode){
+      case 1:
+        Serial.println("Data too long to fit in transmit buffer");
+        break;
+      case 2:
+        Serial.println("Received NACK on transmit of address");
+        break;
+      case 3: 
+        Serial.println("Received NACK on transmit of data");
+        break;
+      case 4:
+        Serial.println("Other error");
+        break;
+      case 5:
+        Serial.println("Timeout");
+        break;
+      default: 
+        Serial.println("Can't identify the error");
+    }
+    if(errorCode){
+      while(1){}
+    }
+  }
 }
