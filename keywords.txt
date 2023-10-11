@@ -41,6 +41,7 @@ enableAlertLatch	KEYWORD2
 enableConvReadyAlert	KEYWORD2
 setAlertType	KEYWORD2
 readAndClearFlags	KEYWORD2
+getI2cErrorCode	KEYWORD2
 overflow	KEYWORD2
 convAlert	KEYWORD2
 limitAlert	KEYWORD2
