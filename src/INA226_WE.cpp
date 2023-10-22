@@ -24,7 +24,11 @@ bool INA226_WE::init(){
     reset_INA226();
     setAverage(AVERAGE_1);
     setConversionTime(CONV_TIME_1100);
+#ifndef INA226_WE_COMPATIBILITY_MODE_
     setMeasureMode(CONTINUOUS);
+#else
+    setMeasureMode(INA226_CONTINUOUS);
+#endif 
     setCurrentRange(MA_800);
     convAlert = false;
     limitAlert = false;
@@ -143,7 +147,7 @@ void INA226_WE::startSingleMeasurement(){
     writeRegister(INA226_CONF_REG, val);        // Starts conversion
     uint16_t convReady = 0x0000;
     unsigned long convStart = millis();
-	while(!convReady && ((millis()-convStart) < 2000)){
+    while(!convReady && ((millis()-convStart) < 2000)){
         convReady = ((readRegister(INA226_MASK_EN_REG)) & 0x0008); // checks if sampling is completed
     }
 }
@@ -157,7 +161,11 @@ void INA226_WE::startSingleMeasurementNoWait(){
 
 void INA226_WE::powerDown(){
     confRegCopy = readRegister(INA226_CONF_REG);
+#ifndef INA226_WE_COMPATIBILITY_MODE_
     setMeasureMode(POWER_DOWN);
+#else
+    setMeasureMode(INA226_POWER_DOWN);
+#endif     
 }
 
 void INA226_WE::powerUp(){

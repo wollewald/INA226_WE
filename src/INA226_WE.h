@@ -24,6 +24,7 @@
 #else
  #include "WProgram.h"
 #endif
+#include "INA226_WE_config.h"
 
 #include <Wire.h>
 
@@ -50,10 +51,17 @@ typedef enum INA226_CONV_TIME{ // Conversion time in microseconds
 } convTime;
 
 typedef enum INA226_MEASURE_MODE{
+#ifndef INA226_WE_COMPATIBILITY_MODE_
     POWER_DOWN      = 0b00000000,
     TRIGGERED       = 0b00000011,
     CONTINUOUS      = 0b00000111
+#else
+    INA226_POWER_DOWN   = 0b00000000,
+    INA226_TRIGGERED    = 0b00000011,
+    INA226_CONTINUOUS   = 0b00000111
+#endif
 } INA226_measureMode;
+
 
 typedef enum INA226_ALERT_TYPE{
     SHUNT_OVER    = 0x8000,
