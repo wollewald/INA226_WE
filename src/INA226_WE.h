@@ -74,7 +74,7 @@ typedef enum INA226_ALERT_TYPE{
     //CONV_READY      = 0x0400   not implemented! Use enableConvReadyAlert() 
 } alertType;
 
-typedef enum INA226_CURRENT_RANGE{
+typedef enum INA226_CURRENT_RANGE{ // Deprecated, but left for downward compatibiity
     MA_400,
     MA_800
 } currentRange;

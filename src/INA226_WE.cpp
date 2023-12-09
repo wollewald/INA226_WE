@@ -22,6 +22,8 @@ bool INA226_WE::init(){
         return 0;
     }
     reset_INA226();
+    calVal = 2048; // default
+    writeRegister(INA226_CAL_REG, calVal);
     setAverage(AVERAGE_1);
     setConversionTime(CONV_TIME_1100);
 #ifndef INA226_WE_COMPATIBILITY_MODE_
@@ -29,7 +31,8 @@ bool INA226_WE::init(){
 #else
     setMeasureMode(INA226_CONTINUOUS);
 #endif 
-    setCurrentRange(MA_800);
+    currentDivider_mA = 40.0;
+    pwrMultiplier_mW = 0.625;
     convAlert = false;
     limitAlert = false;
     corrFactor = 1.0;
@@ -78,22 +81,8 @@ void INA226_WE::setMeasureMode(INA226_MEASURE_MODE mode){
     writeRegister(INA226_CONF_REG, currentConfReg);
 }
 
-void INA226_WE::setCurrentRange(INA226_CURRENT_RANGE range){
-    deviceCurrentRange = range; 
-    
-    switch(deviceCurrentRange){
-        case MA_400:
-            calVal = 2560;
-            currentDivider_mA = 50.0;
-            pwrMultiplier_mW = 0.5;
-            break;
-        case MA_800:
-            calVal = 1280;
-            currentDivider_mA = 25.0;
-            pwrMultiplier_mW = 1.0;
-            break;
-    }   
-    writeRegister(INA226_CAL_REG, calVal);          
+void INA226_WE::setCurrentRange(INA226_CURRENT_RANGE range){ // deprecated, left for downward compatibility
+    deviceCurrentRange = range;      
 }
 
 //set resistor and current range independant. resistor value in ohm, current range in A
