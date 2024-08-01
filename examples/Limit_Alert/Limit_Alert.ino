@@ -132,5 +132,5 @@ void displayResults(){
 
 void alert(){
   event = true;
-  detachInterrupt(2);
+  detachInterrupt(digitalPinToInterrupt(interruptPin));
 }
