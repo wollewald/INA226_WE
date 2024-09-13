@@ -46,8 +46,8 @@ void INA226_WE::reset_INA226(){
 
 void INA226_WE::setCorrectionFactor(float corr){
     corrFactor = corr;
-    calVal *= corrFactor;
-    writeRegister(INA226_CAL_REG, calVal);
+    uint16_t calValCorrected = static_cast<uint16_t>(calVal * corrFactor);
+    writeRegister(INA226_CAL_REG, calValCorrected);
 }
 
 void INA226_WE::setAverage(INA226_AVERAGES averages){
