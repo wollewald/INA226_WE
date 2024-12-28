@@ -29,4 +29,5 @@ in INA226_WE_config.h and use "INA226_POWER_DOWN" instead of "POWER_DOWN". Do th
 
 ![INA226_R002](https://user-images.githubusercontent.com/41305162/184960401-85d419fa-e6c0-47f7-8dfe-79863ef0cc8b.png)
 
+However, you should not use its small In+ and In- connectors. For reasons I don't understand between these connectors and the shunt, there are 4.7 ohm resistors. These will give you far too high shunt voltages!  
 
