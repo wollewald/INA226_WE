@@ -25,6 +25,7 @@ INA226_WE ina226 = INA226_WE(I2C_ADDRESS);
 
 void setup() {
   Serial.begin(9600);
+  pinMode(interruptPin, INPUT_PULLUP); // for modules without internal pullup
   Wire.begin();
   ina226.init();
 
