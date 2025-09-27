@@ -21,7 +21,7 @@
 INA226_WE ina226 = INA226_WE(I2C_ADDRESS);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Wire.begin();
   if(!ina226.init()){
     Serial.println("Failed to init INA226. Check your wiring.");
@@ -29,44 +29,49 @@ void setup() {
   }
 
   /* Set Number of measurements for shunt and bus voltage which shall be averaged
-  * Mode *     * Number of samples *
-  AVERAGE_1            1 (default)
-  AVERAGE_4            4
-  AVERAGE_16          16
-  AVERAGE_64          64
-  AVERAGE_128        128
-  AVERAGE_256        256
-  AVERAGE_512        512
-  AVERAGE_1024      1024
+    * Mode *           * Number of samples *
+    INA226_AVERAGE_1            1 (default)
+    INA226_AVERAGE_4            4
+    INA226_AVERAGE_16          16
+    INA226_AVERAGE_64          64
+    INA226_AVERAGE_128        128
+    INA226_AVERAGE_256        256
+    INA226_AVERAGE_512        512
+    INA226_AVERAGE_1024      1024
   */
-  //ina226.setAverage(AVERAGE_16); // choose mode and uncomment for change of default
+  //ina226.setAverage(INA226_AVERAGE_16); // choose mode and uncomment for change of default
 
   /* Set conversion time in microseconds
      One set of shunt and bus voltage conversion will take: 
      number of samples to be averaged x conversion time x 2
      
      * Mode *         * conversion time *
-     CONV_TIME_140          140 µs
-     CONV_TIME_204          204 µs
-     CONV_TIME_332          332 µs
-     CONV_TIME_588          588 µs
-     CONV_TIME_1100         1.1 ms (default)
-     CONV_TIME_2116       2.116 ms
-     CONV_TIME_4156       4.156 ms
-     CONV_TIME_8244       8.244 ms  
+    INA226_CONV_TIME_140          140 µs
+    INA226_CONV_TIME_204          204 µs
+    INA226_CONV_TIME_332          332 µs
+    INA226_CONV_TIME_588          588 µs
+    INA226_CONV_TIME_1100         1.1 ms (default)
+    INA226_CONV_TIME_2116       2.116 ms
+    INA226_CONV_TIME_4156       4.156 ms
+    INA226_CONV_TIME_8244       8.244 ms  
   */
-  //ina226.setConversionTime(CONV_TIME_1100); //choose conversion time and uncomment for change of default
+  //ina226.setConversionTime(INA226_CONV_TIME_1100); //choose conversion time and uncomment for change of default
   
   /* Set measure mode
-  POWER_DOWN - INA226 switched off
-  TRIGGERED  - measurement on demand
-  CONTINUOUS  - continuous measurements (default)
+    INA226_POWER_DOWN              - INA226 switched off
+    INA226_TRIGGERED               - on demand, both current and bus voltage
+    INA226_TRIGGERED_CURRENT_ONLY  - on demand, current only
+    INA226_TRIGGERERD_BUS_ONLY     - on demand, bus voltage only
+    INA226_CONTINUOUS              - continuous, both current and bus voltage (default)
+    INA226_CONTINUOUS_CURRENT_ONLY - continuous, current only
+    INA226_CONTINUOUS_BUS_ONLY     - continuous, bus voltage only
   */
-  //ina226.setMeasureMode(CONTINUOUS); // choose mode and uncomment for change of default
+  //ina226.setMeasureMode(INA226_CONTINUOUS); // choose mode and uncomment for change of default
   
   /* If the current values delivered by the INA226 differ by a constant factor
-     from values obtained with calibrated equipment you can define a correction factor.
-     Correction factor = current delivered from calibrated equipment / current delivered by INA226
+    from values obtained with calibrated equipment you can define a correction factor.
+    Correction factor = current measured with calibrated device / current measured by INA226
+    Be aware that Imax depends on the real shunt size.
   */
   // ina226.setCorrectionFactor(0.95);
   
