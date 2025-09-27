@@ -24,60 +24,54 @@
 #else
  #include "WProgram.h"
 #endif
-#include "INA226_WE_config.h"
+#include "INA226_WE_legacy.h"
 
 #include <Wire.h>
 
 typedef enum INA226_AVERAGES{
-    AVERAGE_1       = 0x0000, 
-    AVERAGE_4       = 0x0200,
-    AVERAGE_16      = 0x0400,
-    AVERAGE_64      = 0x0600,
-    AVERAGE_128     = 0x0800,
-    AVERAGE_256     = 0x0A00,
-    AVERAGE_512     = 0x0C00,
-    AVERAGE_1024    = 0x0E00
+    INA226_AVERAGE_1       = 0x0000, 
+    INA226_AVERAGE_4       = 0x0200,
+    INA226_AVERAGE_16      = 0x0400,
+    INA226_AVERAGE_64      = 0x0600,
+    INA226_AVERAGE_128     = 0x0800,
+    INA226_AVERAGE_256     = 0x0A00,
+    INA226_AVERAGE_512     = 0x0C00,
+    INA226_AVERAGE_1024    = 0x0E00
 } averageMode;
 
 typedef enum INA226_CONV_TIME{ // Conversion time in microseconds
-    CONV_TIME_140   = 0b00000000,
-    CONV_TIME_204   = 0b00000001,
-    CONV_TIME_332   = 0b00000010,
-    CONV_TIME_588   = 0b00000011,
-    CONV_TIME_1100  = 0b00000100,
-    CONV_TIME_2116  = 0b00000101,
-    CONV_TIME_4156  = 0b00000110,
-    CONV_TIME_8244  = 0b00000111
+    INA226_CONV_TIME_140   = 0b00000000,
+    INA226_CONV_TIME_204   = 0b00000001,
+    INA226_CONV_TIME_332   = 0b00000010,
+    INA226_CONV_TIME_588   = 0b00000011,
+    INA226_CONV_TIME_1100  = 0b00000100,
+    INA226_CONV_TIME_2116  = 0b00000101,
+    INA226_CONV_TIME_4156  = 0b00000110,
+    INA226_CONV_TIME_8244  = 0b00000111
 } convTime;
 
 typedef enum INA226_MEASURE_MODE{
-#ifndef INA226_WE_COMPATIBILITY_MODE_
-    POWER_DOWN      = 0b00000000,
-    TRIGGERED       = 0b00000011,
-    CONTINUOUS      = 0b00000111
-#else
-    INA226_POWER_DOWN   = 0b00000000,
-    INA226_TRIGGERED    = 0b00000011,
-    INA226_CONTINUOUS   = 0b00000111
-#endif
+    INA226_POWER_DOWN,
+    INA226_TRIGGERED_CURRENT_ONLY,
+    INA226_TRIGGERERD_BUS_ONLY,
+    INA226_TRIGGERED,
+    INA226_POWER_DOWN_2,
+    INA226_CONTINUOUS_CURRENT_ONLY,
+    INA226_CONTINUOUS_BUS_ONLY,
+    INA226_CONTINUOUS
 } INA226_measureMode;
 
 
 typedef enum INA226_ALERT_TYPE{
-    SHUNT_OVER    = 0x8000,
-    SHUNT_UNDER   = 0x4000,
-    BUS_OVER      = 0x2000,
-    BUS_UNDER     = 0x1000,
-    POWER_OVER    = 0x0800,
-    CURRENT_OVER  = 0xFFFE,
-    CURRENT_UNDER = 0xFFFF,
-    //CONV_READY      = 0x0400   not implemented! Use enableConvReadyAlert() 
+    INA226_SHUNT_OVER    = 0x8000,
+    INA226_SHUNT_UNDER   = 0x4000,
+    INA226_BUS_OVER      = 0x2000,
+    INA226_BUS_UNDER     = 0x1000,
+    INA226_POWER_OVER    = 0x0800,
+    INA226_CURRENT_OVER  = 0xFFFE,
+    INA226_CURRENT_UNDER = 0xFFFF,
+    //CONV_READY      = 0x0400   not implemented! Use enableConvReadyAlert()
 } alertType;
-
-typedef enum INA226_CURRENT_RANGE{ // Deprecated, but left for downward compatibiity
-    MA_400,
-    MA_800
-} currentRange;
 
 class INA226_WE
 {
@@ -116,8 +110,8 @@ class INA226_WE
         void setConversionTime(INA226_CONV_TIME convTime);
         void setConversionTime(INA226_CONV_TIME shuntConvTime, INA226_CONV_TIME busConvTime);
         void setMeasureMode(INA226_MEASURE_MODE mode);
-        void setCurrentRange(INA226_CURRENT_RANGE range);
-        void setResistorRange(float resistor, float range);
+        // void setCurrentRange(INA226_CURRENT_RANGE range); // DEPRECATED
+        void setResistorRange(float resistor, float range = -1.0);
         float getShuntVoltage_mV();
         float getShuntVoltage_V();
         float getBusVoltage_V();
@@ -144,7 +138,7 @@ class INA226_WE
         INA226_AVERAGES deviceAverages;
         INA226_CONV_TIME deviceConvTime;
         INA226_MEASURE_MODE deviceMeasureMode;
-        INA226_CURRENT_RANGE deviceCurrentRange;
+        // INA226_CURRENT_RANGE deviceCurrentRange; DEPRECATED
         INA226_ALERT_TYPE deviceAlertType; 
         TwoWire *_wire;
         int i2cAddress;

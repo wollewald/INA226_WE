@@ -24,13 +24,9 @@ bool INA226_WE::init(){
     reset_INA226();
     calVal = 2048; // default
     writeRegister(INA226_CAL_REG, calVal);
-    setAverage(AVERAGE_1);
-    setConversionTime(CONV_TIME_1100);
-#ifndef INA226_WE_COMPATIBILITY_MODE_
-    setMeasureMode(CONTINUOUS);
-#else
+    setAverage(INA226_AVERAGE_1);
+    setConversionTime(INA226_CONV_TIME_1100);
     setMeasureMode(INA226_CONTINUOUS);
-#endif 
     currentDivider_mA = 40.0;
     pwrMultiplier_mW = 0.625;
     convAlert = false;
@@ -81,12 +77,18 @@ void INA226_WE::setMeasureMode(INA226_MEASURE_MODE mode){
     writeRegister(INA226_CONF_REG, currentConfReg);
 }
 
-void INA226_WE::setCurrentRange(INA226_CURRENT_RANGE range){ // deprecated, left for downward compatibility
+/* DEPRECATED
+void INA226_WE::setCurrentRange(INA226_CURRENT_RANGE range){ 
     deviceCurrentRange = range;      
 }
+*/
 
 //set resistor and current range independant. resistor value in ohm, current range in A
 void INA226_WE::setResistorRange(float resistor, float current_range){
+    if(current_range < 0) {
+        current_range = 0.0819175/resistor;
+    }
+
     float current_LSB=current_range/32768.0;
 
     calVal = 0.00512/(current_LSB*resistor);
@@ -150,11 +152,7 @@ void INA226_WE::startSingleMeasurementNoWait(){
 
 void INA226_WE::powerDown(){
     confRegCopy = readRegister(INA226_CONF_REG);
-#ifndef INA226_WE_COMPATIBILITY_MODE_
-    setMeasureMode(POWER_DOWN);
-#else
     setMeasureMode(INA226_POWER_DOWN);
-#endif     
 }
 
 void INA226_WE::powerUp(){
@@ -198,27 +196,27 @@ void INA226_WE::setAlertType(INA226_ALERT_TYPE type, float limit){
     uint16_t alertLimit = 0;
     
     switch(deviceAlertType){
-        case SHUNT_OVER:
+        case INA226_SHUNT_OVER:
             alertLimit = limit * 400;           
             break;
-        case SHUNT_UNDER:
+        case INA226_SHUNT_UNDER:
             alertLimit = limit * 400; 
             break;
-        case CURRENT_OVER:
-            deviceAlertType = SHUNT_OVER;
+        case INA226_CURRENT_OVER:
+            deviceAlertType = INA226_SHUNT_OVER;
             alertLimit = limit * 2048 * currentDivider_mA / calVal;
             break;
-        case CURRENT_UNDER:
-            deviceAlertType = SHUNT_UNDER;
+        case INA226_CURRENT_UNDER:
+            deviceAlertType = INA226_SHUNT_UNDER;
             alertLimit = limit * 2048 * currentDivider_mA / calVal;
             break;
-        case BUS_OVER:
+        case INA226_BUS_OVER:
             alertLimit = limit * 800;
             break;
-        case BUS_UNDER:
+        case INA226_BUS_UNDER:
             alertLimit = limit * 800;
             break;
-        case POWER_OVER:
+        case INA226_POWER_OVER:
             alertLimit = limit / pwrMultiplier_mW;
             break;
     }
