@@ -1,11 +1,11 @@
 # INA226_WE
-An Arduino library for the INA226 current and power sensor module using a shunt of 0.1 Ohm. You can also use it for the INA226 IC and a resistor of your choice (example: Continuous_With_Resistor_Value.ino).
+An Arduino library for the INA226 current and power sensor module. You can use the common modules with 0.1 ohm shunts as well as modules with different shunts (example: Continuous_With_Resistor_Value.ino).
 
 It allows to set current ranges, number of samples per measurement, conversion ranges. You can chose between continous, triggered and power down mode. Conversion ready and limit alert modes are also implemented. 
 
 I attached a list of public functions and a fritzing scheme for the example sketches.
 
-If you work through the examples I recommend to do it in the order of Continous -> Triggered -> PowerDown -> Continous_Alert_Controlled -> Limit_Alert -> Limit_And_Conversion_Alert 
+If you work through the examples I recommend to do it in the order of Continous -> Triggered -> Triggered_non_blocking -> PowerDown -> Continous_Alert_Controlled -> Limit_Alert -> Limit_And_Conversion_Alert 
 
 You find further details here:
 
@@ -13,10 +13,8 @@ https://wolles-elektronikkiste.de/ina226  (German)
 
 https://wolles-elektronikkiste.de/en/ina226-current-and-power-sensor  (English)
 
-<h2>New since version 1.2.8: compatibility mode</h2>
-<p>When I developed the library I did not choose the best enum names for the measure modes. E.g. "POWER_DOWN" is also used in INA219_WE. If you have problems then uncomment the line:
-<code> #define INA226_WE_COMPATIBILITY_MODE_ </code>
-in INA226_WE_config.h and use "INA226_POWER_DOWN" instead of "POWER_DOWN". Do the same for "CONTINUOUS" (-> INA226_CONTINUOUS) AND TRIGGERED (-> INA226_TRIGGERED).
+<h2>New since version 1.3.0: safer enumeration names</h2>
+<p>When I developed the library I did not choose the best enum names. E.g. "POWER_DOWN" is also used in INA219_WE. I have added a preceding "INA226_" to avoid name collisions. Unfortunately, you will have to update your sketches accordingly.
 </p>
 
 <h2>Quality of small shunt INA226 modules</h2>
